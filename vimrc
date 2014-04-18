@@ -52,7 +52,7 @@ nnoremap Y y$
 
 "-----------------------------
 set backspace=indent,eol,start
-set whichwrap+=<,>,h,l
+set whichwrap+=<,>,h,l "allows horizontal movement between lines
 
 set mouse=a "a for all modes
 
