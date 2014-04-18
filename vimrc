@@ -15,6 +15,8 @@ Bundle 'tmhedberg/SimpylFold'
 Bundle 'bling/vim-airline'
 Bundle 'syntastic'
 Bundle 'xmledit'
+Bundle 'closetag.vim'
+Bundle 'ctrlp.vim'
 "-----------------------------
 
 "ui stuff --------------------
