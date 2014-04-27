@@ -1,5 +1,4 @@
 set shell=bash
-
 " vundle stuff --------------
 filetype off
 
@@ -18,9 +17,20 @@ Bundle 'xmledit'
 Bundle 'closetag.vim'
 Bundle 'unite.vim'
 Bundle 'vimroom.vim'
+Bundle 'fugitive.vim'
+Bundle 'vim-indent-object'
+Bundle 'bling/vim-bufferline'
+Bundle 'luochen1990/rainbow'
+"colors
+Bundle 'chriskempson/base16-vim'
+Bundle 'baskerville/bubblegum'
+Bundle "daylerees/colour-schemes", { "rtp": "vim/" }
+Bundle 'jonathanfilip/vim-lucius'
 "-----------------------------
 
 "ui stuff --------------------
+colorscheme badwolf
+
 syntax enable 			"enable syntax highlighting
 set number 			"line numbers
 set relativenumber
@@ -29,16 +39,10 @@ set showcmd			"shows curent command bottom right
 set wildmenu			"tab completion menu for command line mode
 set wildignorecase		"tab completion ignores case
 set lazyredraw			"redraws screen less often, improves performance
-"set showmatch			"highlight matching bracket
-
+"undo any fucking with my cursorline the colorscheme may have done:
+hi CursorLine term=bold cterm=bold guibg=Grey40
 if has("gui_running")
 	set guifont=Monospace\ 10
-	set background=light
-	colorscheme solarized
-else
-	set background=dark
-	colorscheme zenburn
-"	hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=NONE guibg=darkred guifg=white
 endif
 
 "-----------------------------
@@ -57,7 +61,9 @@ nnoremap Y y$
 
 "-----------------------------
 set backspace=indent,eol,start
-set whichwrap+=<,>,h,l "allows horizontal movement between lines
+"allows horizontal movement between lines: 
+"bkspce, space, left/right arrow, h, l (normal/visual) left/right arrow (insert)
+set whichwrap=b,s,<,>,h,l,[,] 
 
 set mouse=a "a for all modes
 
@@ -71,23 +77,23 @@ au FileType xml setlocal foldmethod=syntax
 set laststatus=2 "when does last window have statusline? 2=always
 set noshowmode
 set ttimeoutlen=40
-
-"ctrlp stuff
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-if executable('ag')
-	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#bufferline#enabled = 1
+let g:bufferline_echo = 0
 
 " Unite
 let g:unite_source_history_yank_enable = 1
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
-"doesnt seem to work
-"nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+"requires vimproc plugin for async
+"nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async:!<cr>
+
+"requires unite-outline plugin
+"nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
+
+nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>m :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>y :<C-u>Unite -buffer-name=yank    -start-insert history/yank<cr>
+nnoremap <leader>b :<C-u>Unite -buffer-name=buffer  buffer<cr>
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
@@ -99,3 +105,4 @@ function! s:unite_settings()
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 endfunction
 
+let g:rainbow_active = 1
